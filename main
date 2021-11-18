@@ -1,0 +1,67 @@
+
+import pymysql
+from config import host, user, password, db_name
+from datetime import datetime
+print(datetime.now())
+
+try:
+    connection = pymysql.connect(
+        host=host,
+        port=3306,
+        user=user,
+        password=password,
+        database=db_name,
+        cursorclass=pymysql.cursors.DictCursor
+    )
+    print("successfully connected...")
+    print("#" * 20)
+
+    try:
+         #cursor = connection.cursor()
+
+         #####create table
+         with connection.cursor() as cursor:
+            #create_table_query = "CREATE TABLE `Votes`(id int AUTO_INCREMENT," \
+            #                     "MagnetLink varchar(32)," \
+            #                     "Time varchar(32)," \
+            #                     "Tags varchar(32)," \
+            #                     "Salt varchar(32), PRIMARY KEY (id));"
+            #cursor.execute(create_table_query)
+            #print("Table Votes is created successfully")
+            #create_table_query = "CREATE TABLE `Tags`(id int AUTO_INCREMENT," \
+            #                     "M varchar(32)," \
+            #                     "A varchar(32)," \
+            #                     "V varchar(32)," \
+            #                     "Votes varchar(32), PRIMARY KEY (id));"
+            #cursor.execute(create_table_query)
+            #print("Table Tags is created successfully")
+            #####insert data into Votes
+            #insert_query = "INSERT INTO `Votes` (MagnetLink, Time, Tags, Salt) VALUES ('bellwether.com', CURDATE(), 'contemporary', FLOOR(10 + (RAND() * 90)));"
+            #cursor.execute(insert_query)
+            #connection.commit()
+            #####insert data into Tags
+            #insert_query = "INSERT INTO `Tags` (M, A, V) VALUES ('M', 'A', 'V');"
+            #cursor.execute(insert_query)
+            #connection.commit()
+            #####delete data
+            #delete_query = "DELETE FROM `Votes` WHERE Time < (CURDATE() - interval 30 DAY);"
+            #cursor.execute(delete_query)
+            #connection.commit()
+            #####check tables
+            select_all_rows = "SELECT * FROM `Votes`"
+            cursor.execute(select_all_rows)
+            rows = cursor.fetchall()
+            for row in rows:
+                print(row)
+            print("#" * 20)
+
+
+            #cursor.execute("SHOW TABLES;")
+            #print(cursor.fetchall())
+
+    finally:
+        connection.close()
+
+except Exception as ex:
+    print("Connection refused...")
+    print(ex)
